@@ -1,11 +1,11 @@
-package com.maslick.test.ifaces;
+package com.maslick.test;
 
-import com.maslick.test.ActivityRecognizer;
+import com.maslick.test.ifaces.IObserver;
 
 /**
  * Created by maslick on 27.6.2017.
  */
-public class ExampleClient implements IObserver{
+public class ExampleClient implements IObserver {
 
     public ExampleClient() {
         ActivityRecognizer activityRecognizer = new ActivityRecognizer();
