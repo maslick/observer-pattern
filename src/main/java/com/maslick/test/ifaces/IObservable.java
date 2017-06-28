@@ -6,6 +6,7 @@ package com.maslick.test.ifaces;
 public interface IObservable {
     void addObserver(IObserver observer);
     void removeObserver(IObserver observer);
+    void removeObservers();
 
     void notifyEE(Double ee);
     void notifyActivity(String activity);

@@ -13,11 +13,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class ActivityRecognizer implements IObservable {
 
-    List<IObserver> observers = new ArrayList<>();
+    private List<IObserver> observers = new ArrayList<>();
 
     @Override
     public void addObserver(IObserver observer) {
-        observers.add(observer);
+        if (!observers.contains(observer)) observers.add(observer);
     }
 
     @Override
@@ -26,29 +26,28 @@ public class ActivityRecognizer implements IObservable {
     }
 
     @Override
+    public void removeObservers() {
+        for (IObserver observer : observers) observers.remove(observer);
+    }
+
+    @Override
     public void notifyEE(Double ee) {
-        for (IObserver observer:observers) {
-            observer.updateEE(ee);
-        }
+        for (IObserver observer : observers) observer.updateEE(ee);
     }
 
     @Override
     public void notifyActivity(String activity) {
-        for (IObserver observer:observers) {
-            observer.updateActivity(activity);
-        }
+        for (IObserver observer : observers) observer.updateActivity(activity);
     }
 
     @Override
     public void notifyLocation(String location) {
-        for (IObserver observer:observers) {
-            observer.updateLocation(location);
-        }
+        for (IObserver observer : observers) observer.updateLocation(location);
     }
 
     public void startActivityRecognition() {
         Observable.interval(1000, TimeUnit.MILLISECONDS).subscribe(object -> notifyActivity("walking"));
-        Observable.interval(500, TimeUnit.MILLISECONDS).subscribe(object -> notifyEE(1.2));
+        Observable.interval( 500, TimeUnit.MILLISECONDS).subscribe(object -> notifyEE(1.2));
         Observable.interval(2000, TimeUnit.MILLISECONDS).subscribe(object -> notifyLocation("No orientation"));
     }
 }
